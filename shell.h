@@ -1,101 +1,105 @@
-#ifndef SHELL_H
-#define SHELL_H
+#ifndef SHELLH
+#define SHELLH
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
 #include <fcntl.h>
-#include <signal.h>
-#include <errno.h>
-#include <limits.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include "history.h"
+#include "shellvars.h"
+/*#include <string.h>*/
 
-extern char **environ;
+/* from in.c */
+int shintmode(void);
 
-/**
- * struct list_s - singly linked list
- * @str: string - (malloc'ed string)
- * @next: points to the next node
- *
- * Description: singly linked list node structure
- */
-typedef struct list_s
-{
-	char *str;
-	struct list_s *next;
-} env_t;
+/* from _printenv.c */
+int _printenv(void);
 
-/* main.c */
-int exec(char **input, char *s, int *i, env_t **head);
+/* from cmdcall.c */
+int builtincall(char *av[]);
+int cmdcall(char *av[], char *path);
 
-/* path_finder.c */
-char **get_env(char *name, char **env);
-char *path_finder(char **s, char **env);
-char *get_env_val(char *name, char **env);
+/* from parser.c */
+int parseargs(char **buf);
 
-/* tokenize.c */
-int wordcount(char *str, char delim);
-char **_strtok(char *str, char delim);
+/* from errhandl.c */
+int errhandl(int status);
 
-/* print_funcs.c */
-void print_prompt(void);
-int _putchar(char c);
-void _puts(char *str);
-
-/* print_errors.c */
-void print_error(int *i, char *s, char **argv);
-void print_error_env(char **argv);
-void print_error_exit(int *i, char *s, char **argv);
-void print_error_main(char **av);
-void print_error_cd(int *i, char *s, char **argv);
-
-/* string_funcs_1.c */
-int _strcmp(char *s1, char *s2);
-char *str_concat(char *s1, char *s2);
-char *_strstr(char *haystack, char *needle);
-int _strncmp(char *s1, char *s2, unsigned int n);
-char *_strdup(char *str);
-
-/* string_funcs_2.c */
-int _strlen(char *s);
+/* from string.c */
+size_t _strlen(char *str);
 char *_strcpy(char *dest, char *src);
+int _strcmp(char *, char *);
+char *_strdup(char *str);
+char *_strcat(char *a, char *b);
 
-/* helper_funcs.c */
-void free_everything(char **args);
-void sigint_handler(int sig);
-char **parse_line(char *line, int get);
+/* from _getenv.c and getenviron.c */
+char ***getenviron(void);
+int setallenv(char **environ, char *add);
+char *_getenv(char *avzero);
+int _setenv(char *name, char *val);
+int _unsetenv(char *name);
+char **getallenv(void);
 
-/* builtins.c */
-int is_builtin(char *line, char **argv, char *prog_name, int *i, env_t **head);
-long int exit_handler(char **tokens);
-int env_handler(char **av, env_t **head);
-int cd_handler(char **argv, env_t **head);
-void change_pwd(char *path, char **env, env_t **head);
 
-/* convert.c */
-char *convert(int num, int base);
-long int _atoi(char *s);
+/* from utility.c */
+char *itos(int digits);
+char *_strchr(char *s, char c);
+int fprintstrs(int fd, char *str, ...);
+int printerr(char *);
+int linecount(int);
 
-/* list_funcs_1.c */
-env_t *add_node_end(env_t **head, char *str);
-int add_node_at_index(env_t **head, char *str, int index);
-int delete_node_at_index(env_t **head, unsigned int index);
-int find_index_list(env_t *head, char *name);
+/* from cd.c */
+int _cd(char *av[]);
 
-/* list_funcs_2.c */
-size_t list_len(const env_t *h);
-size_t print_list(env_t *h);
-void free_list(env_t **head);
-int arr_to_list(env_t **head, char **env);
-char **list_to_arr(env_t *head);
+/* from alias.c */
+int aliascmd(char **av);
+char *getalias(char *name);
+int unsetalias(char *name);
 
-/* set_env.c */
-int _unsetenv(env_t **head, char **argv);
-int _setenv(env_t **head, char **argv, int args);
-void setenv_handler(char **argv, env_t **head, int *i, char *prog_name);
-void print_error_setenv(int *i, char *s, char **argv);
+/* from shellvars.c */
+int initsvars(int ac, char **av);
+char *getsvar(char *name);
+int setsvar(char *name, char *val);
+int unsetsvar(char *name);
+ShellVar **getspecial(void);
+ShellVar **getvars(void);
+
+/* from _realloc.c */
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
+
+/* from _strtok.c */
+char *strtok(char *str, char *delim);
+
+/* from _getline.c */
+int _getline(char **lineptr, int fd);
+
+char *strtokqe(char *str, char *delim, int escflags);
+
+/*from history.c*/
+int sethist(char *cmd);
+int print_hist(void);
+int exit_hist(void);
+
+
+/* from _printenv.c */
+int _printenv(void);
+int _putchar(char c);
+
+
+
+/*from help.c*/
+int help(char *cmd);
+
+/* from exitcleanup.c */
+void exitcleanup(char **av);
+
+/* from _atoi*/
+int _atoi(char *s);
+
+char *_getpid(void);
+
 
 #endif
