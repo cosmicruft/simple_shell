@@ -1,20 +1,8 @@
 # 0x15. C - Simple Shell
 
 
-					           _.-''|''-._
-					        .-'     |     `-.
-					      .'\       |       /`.
-					    .'   \      |      /   `.
-					    \     \     |     /     /
-					     `\    \    |    /    /'
-					       `\   \   |   /   /'
-					         `\  \  |  /  /'
-					        _.-`\ \ | / /'-._
-					       {_____`\\|//'_____}
-					               `-'
-
 ## Description
-This team project is part of the first year curriculum of Holberton School.
+This team project is part of the first year curriculum of ALX School.
 Simple Shell is a command line interpreter that replicates the **sh** program on Linux.
 It can take in simple commands to navigate the terminal, manipulate files, and execute programs.
 
@@ -49,7 +37,7 @@ $ /bin/ls
 foo main.c coquille.c README.md tests croissant.c
 ```
 ```bash
-$ pwd 
+$ pwd
 /home/vagrant/simple_shell
 ```
 ```bash

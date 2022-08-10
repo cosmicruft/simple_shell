@@ -1,4 +1,4 @@
-.TH man 1 "17 April 2019" "HOLBERTON SCHOOL" "SIMPLE SHELL"
+.TH man 1 "10 August 2022" "ALX" "SIMPLE SHELL"
 .SH NAME
 .B Simple Shell
 - command line interpreter
@@ -105,4 +105,4 @@ as some builtins and features are missing. Simple Shell only takes one command a
 As mentionned before, some regular shell builtins are not implemented in Simple Shell, and trying to execute them
 will end up in unexpected behavior, or error message.
 .SH AUTHORS
-Scout Curry and Laura Roudge, Cohort 8.
+Olatunji Sobayo and Golden Dennar, Cohort 7.
